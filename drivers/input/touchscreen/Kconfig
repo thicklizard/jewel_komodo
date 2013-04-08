@@ -485,6 +485,10 @@ config TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE
 	
 	   If unsure, say Y.
 
+config TOUCHSCREEN_SYNAPTICS_SWEEP2WAKE_GESTURES
+	tristate "Sweep2Wake with gestures for SYNAPTICS_3k based touchscreens"
+        default n 
+
 config TOUCHSCREEN_SYNAPTICS_3K
         tristate "Synaptics 3k serious i2c touchscreen"
         depends on I2C

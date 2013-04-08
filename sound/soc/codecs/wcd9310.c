@@ -39,7 +39,7 @@
 //htc audio --
 
 #define WCD9310_RATES (SNDRV_PCM_RATE_8000|SNDRV_PCM_RATE_16000|\
-			SNDRV_PCM_RATE_32000|SNDRV_PCM_RATE_48000)
+			SNDRV_PCM_RATE_32000|SNDRV_PCM_RATE_48000|SNDRV_PCM_RATE_96000)
 
 #define NUM_DECIMATORS 10
 #define NUM_INTERPOLATORS 7
@@ -3028,6 +3028,10 @@ static int tabla_hw_params(struct snd_pcm_substream *substream,
 		tx_fs_rate = 0x03;
 		rx_fs_rate = 0x60;
 		break;
+	case 96000:
+		tx_fs_rate = 0x04;
+		rx_fs_rate = 0x80;
+		break;
 	default:
 		pr_err("%s: Invalid sampling rate %d\n", __func__,
 				params_rate(params));
@@ -4626,6 +4630,11 @@ static void tabla_codec_init_reg(struct snd_soc_codec *codec)
 				tabla_codec_reg_init_val[i].mask,
 				tabla_codec_reg_init_val[i].val);
 }
+
+#ifdef CONFIG_SOUND_CONTROL_HAX_GPL
+struct snd_kcontrol_new *gpl_faux_snd_controls_ptr =
+    (struct snd_kcontrol_new *)tabla_snd_controls;
+#endif
 
 static int tabla_codec_probe(struct snd_soc_codec *codec)
 {

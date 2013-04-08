@@ -89,54 +89,21 @@ acpuclk_set_rate footprint cpu1		: phy 0x889F1040 : virt 0xFE703040
 #define CPU_FOOT_PRINT_BASE_CPU0_VIRT		(MSM_KERNEL_FOOTPRINT_BASE + 0x0)
 static void set_acpuclk_foot_print(unsigned cpu, unsigned state)
 {
-#ifdef CONFIG_MSM_CPU_MAX_CLK_1DOT89GHZ
-	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x44) + cpu;
-#endif
-#ifdef CONFIG_MSM_CPU_MAX_CLK_1DOT7GHZ
-	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x3c) + cpu;
-#endif
-#ifdef CONFIG_MSM_CPU_MAX_CLK_2DOT1GHZ
-	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x44) + cpu;
-#endif
-#ifdef CONFIG_MSM_CPU_MAX_CLK_1DOT5GHZ
 	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x3C) + cpu;
-#endif
 	*status = (CPU_FOOT_PRINT_MAGIC | state);
 	mb();
 }
 
 static void set_acpuclk_cpu_freq_foot_print(unsigned cpu, unsigned khz)
 {
-#ifdef CONFIG_MSM_CPU_MAX_CLK_1DOT89GHZ
-	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x44) + cpu;
-#endif
-#ifdef CONFIG_MSM_CPU_MAX_CLK_1DOT7GHZ
-	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x3c) + cpu;
-#endif
-#ifdef CONFIG_MSM_CPU_MAX_CLK_2DOT1GHZ
-	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x44) + cpu;
-#endif
-#ifdef CONFIG_MSM_CPU_MAX_CLK_1DOT5GHZ
 	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x30) + cpu;
-#endif
 	*status = khz;
 	mb();
 }
 
 static void set_acpuclk_L2_freq_foot_print(unsigned khz)
 {
-#ifdef CONFIG_MSM_CPU_MAX_CLK_1DOT89GHZ
-	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x36);
-#endif
-#ifdef CONFIG_MSM_CPU_MAX_CLK_1DOT7GHZ
-	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x3c);
-#endif
-#ifdef CONFIG_MSM_CPU_MAX_CLK_2DOT1GHZ
 	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x38);
-#endif
-#ifdef CONFIG_MSM_CPU_MAX_CLK_1DOT5GHZ
-	unsigned *status = (unsigned *)(CPU_FOOT_PRINT_BASE_CPU0_VIRT + 0x38);
-#endif
 	*status = khz;
 	mb();
 }
@@ -248,11 +215,11 @@ static struct scalable scalable_8960[] = {
 			.hfpll_base      = MSM_HFPLL_BASE + 0x200, 
 			.aux_clk_sel     = MSM_ACC0_BASE  + 0x014, 
 			.l2cpmr_iaddr    = L2CPUCPMR_IADDR, 
-			.vreg[VREG_CORE] = { "krait0",     1300000 }, 
-			.vreg[VREG_MEM]  = { "krait0_mem", 1150000, 
+			.vreg[VREG_CORE] = { "krait0",     1350000 }, 
+			.vreg[VREG_MEM]  = { "krait0_mem", 1250000, 
 					     RPM_VREG_VOTER1, 
 					     RPM_VREG_ID_PM8921_L24 }, 
-			.vreg[VREG_DIG]  = { "krait0_dig", 1150000, 
+			.vreg[VREG_DIG]  = { "krait0_dig", 1250000, 
 					     RPM_VREG_VOTER1, 
 					     RPM_VREG_ID_PM8921_S3 }, 
 			.vreg[VREG_HFPLL_A] = { "hfpll", 2100000, 
@@ -266,11 +233,11 @@ static struct scalable scalable_8960[] = {
 			.hfpll_base      = MSM_HFPLL_BASE + 0x300, 
 			.aux_clk_sel     = MSM_ACC1_BASE  + 0x014, 
 			.l2cpmr_iaddr    = L2CPUCPMR_IADDR, 
-			.vreg[VREG_CORE] = { "krait1",     1300000 }, 
-			.vreg[VREG_MEM]  = { "krait0_mem", 1150000, 
+			.vreg[VREG_CORE] = { "krait1",     1350000 }, 
+			.vreg[VREG_MEM]  = { "krait0_mem", 1250000, 
 					     RPM_VREG_VOTER2, 
 					     RPM_VREG_ID_PM8921_L24 }, 
-			.vreg[VREG_DIG]  = { "krait0_dig", 1150000, 
+			.vreg[VREG_DIG]  = { "krait0_dig", 1250000, 
 					     RPM_VREG_VOTER2, 
 					     RPM_VREG_ID_PM8921_S3 }, 
 			.vreg[VREG_HFPLL_A] = { "hfpll", 2100000, 
@@ -610,9 +577,10 @@ static struct acpu_level acpu_freq_tbl_8960_kraitv2_slow[] = {
 #ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT5GHZ
 	{ 1, {  1674000, HFPLL, 1, 0, 0x3E }, L2(21), 1275000 },
 	{ 1, {  1728000, HFPLL, 1, 0, 0x40 }, L2(21), 1300000 },
-#ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT7GHZ
-	{ 1, {  1809000, HFPLL, 1, 0, 0x43 }, L2(21), 1325000 },
-	{ 1, {  1890000, HFPLL, 1, 0, 0x40 }, L2(22), 1350000 },
+	{ 1, {  1809000, HFPLL, 1, 0, 0x43 }, L2(22), 1325000 },
+#ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT8GHZ
+	{ 1, {  1890000, HFPLL, 1, 0, 0x46 }, L2(22), 1350000 },
+	{ 1, {  1998000, HFPLL, 1, 0, 0x48 }, L2(22), 1350000 },
 #ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT89GHZ
 	{ 1, {  1998000, HFPLL, 1, 0, 0x42 }, L2(22), 1350000 },
 	{ 1, {  2106000, HFPLL, 1, 0, 0x44 }, L2(22), 1350000 },
@@ -649,9 +617,10 @@ static struct acpu_level acpu_freq_tbl_8960_kraitv2_nom[] = {
 #ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT5GHZ
 	{ 1, {  1674000, HFPLL, 1, 0, 0x3E }, L2(21), 1225000 },
 	{ 1, {  1728000, HFPLL, 1, 0, 0x40 }, L2(21), 1250000 },
-#ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT7GHZ
-	{ 1, {  1809000, HFPLL, 1, 0, 0x43 }, L2(21), 1300000 },
-	{ 1, {  1890000, HFPLL, 1, 0, 0x40 }, L2(19), 1300000 },
+	{ 1, {  1809000, HFPLL, 1, 0, 0x43 }, L2(22), 1300000 },
+#ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT8GHZ
+	{ 1, {  1890000, HFPLL, 1, 0, 0x46 }, L2(22), 1350000 },
+	{ 1, {  1998000, HFPLL, 1, 0, 0x48 }, L2(22), 1350000 },
 #ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT89GHZ
 	{ 1, {  1998000, HFPLL, 1, 0, 0x42 }, L2(19), 1325000 },
 	{ 1, {  2106000, HFPLL, 1, 0, 0x44 }, L2(19), 1350000 },
@@ -676,21 +645,22 @@ static struct acpu_level acpu_freq_tbl_8960_kraitv2_fast[] = {
 	{ 1, {   918000, HFPLL, 1, 0, 0x22 }, L2(7),  1000000 },
 	{ 0, {   972000, HFPLL, 1, 0, 0x24 }, L2(7),  1025000 },
 	{ 1, {  1026000, HFPLL, 1, 0, 0x26 }, L2(7),  1025000 },
-	{ 0, {  1080000, HFPLL, 1, 0, 0x28 }, L2(16), 1075000 },
-	{ 1, {  1134000, HFPLL, 1, 0, 0x2A }, L2(16), 1075000 },
-	{ 0, {  1188000, HFPLL, 1, 0, 0x2C }, L2(16), 1100000 },
-	{ 1, {  1242000, HFPLL, 1, 0, 0x2E }, L2(16), 1100000 },
-	{ 0, {  1296000, HFPLL, 1, 0, 0x30 }, L2(16), 1125000 },
-	{ 1, {  1350000, HFPLL, 1, 0, 0x32 }, L2(16), 1125000 },
-	{ 0, {  1404000, HFPLL, 1, 0, 0x34 }, L2(16), 1125000 },
-	{ 1, {  1458000, HFPLL, 1, 0, 0x36 }, L2(16), 1137500 },
-	{ 1, {  1512000, HFPLL, 1, 0, 0x38 }, L2(18), 1150000 },
+	{ 0, {  1080000, HFPLL, 1, 0, 0x28 }, L2(19), 1075000 },
+	{ 1, {  1134000, HFPLL, 1, 0, 0x2A }, L2(19), 1075000 },
+	{ 0, {  1188000, HFPLL, 1, 0, 0x2C }, L2(19), 1100000 },
+	{ 1, {  1242000, HFPLL, 1, 0, 0x2E }, L2(19), 1100000 },
+	{ 0, {  1296000, HFPLL, 1, 0, 0x30 }, L2(19), 1125000 },
+	{ 1, {  1350000, HFPLL, 1, 0, 0x32 }, L2(19), 1125000 },
+	{ 0, {  1404000, HFPLL, 1, 0, 0x34 }, L2(19), 1125000 },
+	{ 1, {  1458000, HFPLL, 1, 0, 0x36 }, L2(20), 1137500 },
+	{ 1, {  1512000, HFPLL, 1, 0, 0x38 }, L2(21), 1150000 },
 #ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT5GHZ
 	{ 1, {  1674000, HFPLL, 1, 0, 0x3E }, L2(21), 1200000 },
 	{ 1, {  1728000, HFPLL, 1, 0, 0x40 }, L2(21), 1250000 },
-#ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT7GHZ
-	{ 1, {  1809000, HFPLL, 1, 0, 0x43 }, L2(21), 1300000 },
-	{ 1, {  1890000, HFPLL, 1, 0, 0x40 }, L2(19), 1275000 },
+	{ 1, {  1809000, HFPLL, 1, 0, 0x43 }, L2(22), 1300000 },
+#ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT8GHZ
+	{ 1, {  1890000, HFPLL, 1, 0, 0x46 }, L2(22), 1350000 },
+	{ 1, {  1998000, HFPLL, 1, 0, 0x48 }, L2(22), 1350000 },
 #ifndef CONFIG_MSM_CPU_MAX_CLK_1DOT89GHZ
 	{ 1, {  1998000, HFPLL, 1, 0, 0x42 }, L2(19), 1300000 },
 	{ 1, { 2106000,  HFPLL, 1, 0, 0x44 }, L2(19), 1325000 },
